@@ -37,6 +37,8 @@ elif data_size > 10e6:
 else:
     total_jobs = 1
     jobs_at_once = 1
+# total_jobs = 1
+# jobs_at_once = 1
 
 S = data_size//total_jobs
 

@@ -44,10 +44,42 @@ split = args.split
 data_dir = args.data_dir
 save_dir = args.save_dir
 dataset_name = args.name
+column_name = "input"
+batch_size = 2**2
+file_type = "csv"
+
+# 기존 코드 - public dataset
+# ds = tfds.load(dataset_name, split=split, shuffle_files=False, batch_size=2**16,
+#                data_dir=data_dir)
+
+# experimental csv(json) load 로 바꿈
+import pandas as pd
+
+if file_type == "csv":
+    file_path = f"{data_dir}/{dataset_name}.csv"
+    dataframe = pd.read_csv(file_path)
+elif file_type == "json":
+    file_path = f"{data_dir}/{dataset_name}.json"
+    dataframe = pd.read_json(file_path)
+elif file_type == 'xlsx':
+    file_path = f"{data_dir}/{dataset_name}.xlsx"
+    dataframe = pd.read_excel(file_path)    
+else:
+    raise NotImplementedError(f"file type:{file_type} - unknown. Only csv, json, xlsx are supported")
+
+# Convert the pandas dataframe to a tensorflow dataset
+# Find the rows where there are any missing values
+missing_rows = dataframe[dataframe.isnull().any(axis=1)]
+print(f"missing dataframe:{missing_rows}")
+print (f"# input dataframe: {len(dataframe)}")
+# Drop the rows where there are any missing values
+dataframe = dataframe.dropna()
+print (f"# after removing missing values: {len(dataframe)}")
+
+ds = tf.data.Dataset.from_tensor_slices(dict(dataframe))
+ds = ds.batch(batch_size=batch_size)
 
 
-ds = tfds.load(dataset_name, split=split, shuffle_files=False, batch_size=2**16,
-               data_dir=data_dir)
 assert isinstance(ds, tf.data.Dataset)
 print(ds)
 
@@ -73,20 +105,38 @@ if not os.path.exists(save_dir):
     os.mkdir(save_dir)
 
 fout = open(os.path.join(save_dir, dataset_name+"."+split), "wb")
+fsize = open(os.path.join(save_dir,dataset_name+"."+split+".size"), "wb")
 
-with mp.get_context("fork").Pool(mp.cpu_count()) as p:
-    i = 0
-    sizes = [0]
-    for b in ds:
-        print(i)
+# with mp.get_context("fork").Pool(mp.cpu_count()) as p:
+#     i = 0
+#     sizes = [0]
+#     for b in ds:
+#         if i % 100 == 0:
+#            print(i)
     
-        text = b['text'].numpy()
-        text = p.map(tok,text)
+#         text = b[column_name].numpy()
+#         text = p.map(tok,text)
         
-        for x in text:
-            next_line = sep()+x
-            fout.write(next_line)
-            sizes.append(sizes[-1]+len(next_line))
-        i += 1
+#         for x in text:
+#             next_line = sep()+x
+#             fout.write(next_line)
+#             sizes.append(sizes[-1]+len(next_line))
+#         i += 1
 
-open(os.path.join(save_dir,dataset_name+"."+split+".size"), "wb").write(np.array(sizes,dtype=np.uint64).tobytes())
+# Multi - processing 삭제. Tokenize 삭제
+i = 0
+sizes = [0]
+for b in ds:
+    if i % 100 == 0:
+        print(i)
+
+    text = b[column_name].numpy()
+    # text = p.map(tok,text)
+    
+    for x in text:
+        next_line = sep()+x
+        fout.write(next_line)
+        sizes.append(sizes[-1]+len(next_line))
+    i += 1
+
+fsize.write(np.array(sizes,dtype=np.uint64).tobytes())
