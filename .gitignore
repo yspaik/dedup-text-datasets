@@ -1,0 +1,53 @@
+# extras
+Pipfile*
+results*
+
+*.pyc
+__pycache__
+
+.DS_Store
+
+# pycharm
+.idea
+
+# data
+data/
+*.pkl
+
+# test script
+*_test.py
+
+# log
+**/log/**
+*.log
+
+# save
+**/save/**
+
+# .bak.py
+*.bak.py
+
+# compile files
+build
+dist
+convlab.egg-info
+target/ 
+
+# configs
+*experiment*
+*pretrained_models*
+.ipynb_checkpoints
+config.yaml
+
+## dst files
+
+
+*.egg-info
+.eggs/*
+pre-trained-models/
+venv
+*.zip
+*/dummy_data.json
+*.csv
+tmp/
+tmp/*
