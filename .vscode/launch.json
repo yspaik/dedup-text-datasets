@@ -1,0 +1,62 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      // {
+      //   "name": "Python Launch",
+      //   "type": "python",
+      //   "request": "launch",
+      //   "program": "${workspaceFolder}/scripts/load_dataset.py",
+      //   "console": "integratedTerminal",
+      //   "args": ["--data_dir", "tmp/data/dsurf/", "--save_dir", "tmp/saved/dsurf/", "--name", "foundation_93k_input", "--split", "train"],
+      //   // "args": ["--data_dir", "tmp/data", "--save_dir", "tmp/saved", "--name", "wiki40b", "--split", "train", "--tokenize"]
+      // },
+      // {
+      //   "name": "Python Launch",
+      //   "type": "python",
+      //   "request": "launch",
+      //   "program": "${workspaceFolder}/scripts/make_suffix_array.py",
+      //   "console": "integratedTerminal",
+      //   "args": ["tmp/saved/ft_data_text_snippet.train"]
+      // },
+      // {
+      //   "name": "Python Launch",
+      //   "type": "python",
+      //   "request": "launch",
+      //   "program": "${workspaceFolder}/scripts/finish_with_cliche.py",
+      //   "console": "integratedTerminal",
+      //   "args": ["--origin_file", "tmp/data/dsurf/foundation_110k_input_top30.csv", "--remove_file", "tmp/foundation_110k_input_top30.train.remove.byterange", "--cliche_file", "tmp/data/dsurf/foundation_110k_input_top30_cliche.csv"]
+      // },
+      // {
+      //   "name": "Python Launch",
+      //   "type": "python",
+      //   "request": "launch",
+      //   "program": "${workspaceFolder}/scripts/finish_with_dup_info.py",
+      //   "console": "integratedTerminal",
+      //   "args": ["--data_dir", "tmp/data/dsurf/", "--save_dir", "tmp/saved/dsurf", "--suffixarray_dir", "tmp/saved/dsurf", "--name","foundation_118k_input", "--split", "train", "--remove_dir", "tmp/"]
+      // },
+      {
+        "name": "Python Launch",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/scripts/finish_with_dup_info.py",
+        "console": "integratedTerminal",
+        "args": ["--data_dir", "tmp/data/hf_challenge/", "--save_dir", "tmp/saved/hf_challenge/", "--suffixarray_dir", "tmp/saved/hf_challenge", "--name","prep_orca_gpt4", "--file_type","xlsx", "--column_name","question", "--split", "train", "--remove_dir", "tmp/"]
+      },
+
+      // {
+      //   "name": "Python Launch",
+      //   "type": "python",
+      //   "request": "launch",
+      //   "program": "${workspaceFolder}/scripts/prepare_dataset.py",
+      //   "console": "integratedTerminal",
+      // }
+      // {
+      //   "name": "Python Launch",
+      //   "type": "python",
+      //   "request": "launch",
+      //   "program": "${workspaceFolder}/scripts/count_occurrences.py",
+      //   "console": "integratedTerminal",
+      //   "args": ["--suffix", "tmp/saved/dsurf/foundation_64k_dump.train", "--query", "보궐선거/국회의원(경기 포천시·연천군)"]
+      // }
+    ]
+  }

@@ -28,6 +28,8 @@ parser.add_argument('--name', type=str)
 parser.add_argument('--split', type=str)
 parser.add_argument('--tokenize', action='store_true')
 parser.add_argument('--tokenizer', type=str, default="gpt2")
+parser.add_argument('--file_type', type=str, default="csv")
+parser.add_argument('--column_name', type=str, default="input")
 parser.add_argument('--pre_sep', type=bytes, default=b"\xff\xff")
 parser.add_argument('--post_sep', type=bytes, default=b"")
 args = parser.parse_args()
@@ -44,9 +46,9 @@ split = args.split
 data_dir = args.data_dir
 save_dir = args.save_dir
 dataset_name = args.name
-column_name = "input"
+file_type = args.file_type
+column_name = args.column_name
 batch_size = 2**2
-file_type = "csv"
 
 # 기존 코드 - public dataset
 # ds = tfds.load(dataset_name, split=split, shuffle_files=False, batch_size=2**16,

@@ -1,0 +1,29 @@
+ARG build_image
+ARG base_image
+
+FROM ubuntu:22.04
+# FROM $build_image AS build-image
+
+ARG DEBIAN_FRONTEND=noninteractive
+ARG haystack_version
+ARG haystack_extras
+
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential gcc git curl cmake \
+    vim zip sudo nano openssh-server ffmpeg wget
+
+# RUN git clone --depth=1 git@github.com:yspaik/dedup-text-datasets.git /opt/dedup
+WORKDIR /opt/dedup
+ENV WORKDIR /opt/dedup
+
+# RUN export PATH=$(echo $PATH | sed -e 's|/opt/conda/bin:||')
+
+# Use a virtualenv we can copy over the next build stage
+RUN python3 -m venv --system-site-packages /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# RUN pip install --upgrade pip && \
+    # pip install --no-cache-dir -U torchaudio
+#     pip install --no-cache-dir .${haystack_extras} && \
+#     # pip install --no-cache-dir ./rest_api
