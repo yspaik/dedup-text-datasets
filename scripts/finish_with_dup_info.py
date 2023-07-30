@@ -160,5 +160,11 @@ with mp.get_context("fork").Pool(mp.cpu_count()) as p:
 
 # Save to a new CSV
 # new_df.to_excel(dup_info_file, index=True)
+n_no_dupped = new_df[new_df['is_dupped'] == False].shape[0]
+n_dupped = new_df[new_df['is_dupped'] == True].shape[0]
+assert new_df.shape[0] == n_dupped + n_no_dupped
+
 new_df.to_csv(dup_info_file, encoding="utf-8-sig")
+
 print(f'{dup_info_file} is created. (shape: {new_df.shape}')
+print(f'# dupped rows:{n_dupped}, # not dupped:{n_no_dupped}')

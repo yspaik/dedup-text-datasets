@@ -40,7 +40,7 @@
         "request": "launch",
         "program": "${workspaceFolder}/scripts/finish_with_dup_info.py",
         "console": "integratedTerminal",
-        "args": ["--data_dir", "tmp/data/hf_challenge/", "--save_dir", "tmp/saved/hf_challenge/", "--suffixarray_dir", "tmp/saved/hf_challenge", "--name","prep_orca_gpt4", "--file_type","xlsx", "--column_name","question", "--split", "train", "--remove_dir", "tmp/"]
+        "args": ["--data_dir", "tmp/data/hf_challenge/", "--save_dir", "tmp/saved/hf_challenge/", "--suffixarray_dir", "tmp/saved/hf_challenge", "--name","prep_orca_gpt4", "--file_type","csv", "--column_name","question", "--split", "train", "--remove_dir", "tmp/"]
       },
 
       // {
